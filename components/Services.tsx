@@ -128,7 +128,7 @@ export default function Services() {
                   </div>
                   
                   {/* Service Name - FROM DATABASE */}
-                  <h3 className="text-2xl font-bold text-gray-900 h-8 mb-4">
+                  <h3 className="text-2xl font-bold text-gray-900 h-12 mb-4">
                     {service.name}
                   </h3>
                   
