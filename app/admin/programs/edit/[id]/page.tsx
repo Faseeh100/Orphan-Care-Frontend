@@ -53,7 +53,7 @@ export default function EditProgramPage() {
     setSaving(true);
     
     try {
-      const response = await fetch(`http://localhost:5000/api/programs/admin/${programId}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/programs/admin/${programId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
