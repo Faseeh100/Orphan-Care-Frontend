@@ -279,7 +279,7 @@ export default function AddImagePage() {
                 <button
                   type="submit"
                   disabled={uploading || !selectedFile}
-                  className={`w-full py-4 rounded-xl font-semibold text-lg transition-all ${
+                  className={`w-full py-4 rounded-xl cursor-pointer font-semibold text-lg transition-all ${
                     uploading || !selectedFile
                       ? 'bg-gray-300 cursor-not-allowed'
                       : 'bg-linear-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-lg hover:shadow-xl'
