@@ -22,7 +22,7 @@ export default function EditProgramPage() {
   useEffect(() => {
     const fetchProgram = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/programs/admin/${programId}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/programs/admin/${programId}`);
         
         if (!response.ok) {
           throw new Error(`HTTP ${response.status}: ${response.statusText}`);
