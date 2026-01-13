@@ -135,7 +135,8 @@ export default function GallerySection() {
               {/* Image Container */}
               <div className="relative h-64 w-full bg-gray-100">
                 <Image
-                  src={`${BACKEND_URL}${image.filePath}`}
+                  // src={`${BACKEND_URL}${image.filePath}`}
+                  src={image.filePath}
                   alt={image.altText || image.originalName}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-300"

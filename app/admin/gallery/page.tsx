@@ -193,7 +193,8 @@ export default function GalleryPage() {
                 {/* Image Container */}
                 <div className="relative h-56 w-full bg-linear-to-br from-gray-100 to-gray-200">
                   <Image
-                    src={`${process.env.NEXT_PUBLIC_API_URL?.replace('/api', '')}${image.filePath}`}
+                    // src={`${process.env.NEXT_PUBLIC_API_URL?.replace('/api', '')}${image.filePath}`}
+                    src={image.filePath}
                     alt={image.altText || image.originalName}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
@@ -231,7 +232,8 @@ export default function GalleryPage() {
                   {/* Actions */}
                   <div className="flex items-center gap-2 pt-4 border-t border-gray-100">
                     <button
-                      onClick={() => window.open(`${process.env.NEXT_PUBLIC_API_URL}${image.filePath}`, '_blank')}
+                      // onClick={() => window.open(`${process.env.NEXT_PUBLIC_API_URL}${image.filePath}`, '_blank')}
+                      onClick={() => window.open(image.filePath, '_blank')}
                       className="flex-1 flex items-center justify-center cursor-pointer gap-2 px-3 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors"
                     >
                       <Eye className="w-4 h-4" />
