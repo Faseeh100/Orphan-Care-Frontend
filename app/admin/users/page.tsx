@@ -292,18 +292,30 @@ export default function AdminUsersPage() {
   const [error, setError] = useState<string | null>(null)
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null)
 
-  // ✅ ADD THIS HELPER FUNCTION
   const getImageUrl = (imagePath?: string) => {
-    if (!imagePath) return '';
-    
-    // If it's already a full URL (from Backblaze B2)
-    if (imagePath.startsWith('http')) {
-      return imagePath;
-    }
-    
-    // If it's a local path (legacy) - prepend base URL
-    return `${process.env.NEXT_PUBLIC_API_URL?.replace('/api', '')}${imagePath}`;
-  };
+  if (!imagePath) return '';
+  
+  // Debug log to see what we're getting
+  console.log('🔍 Image path from API:', imagePath);
+  
+  // Case 1: Full URL (Backblaze B2 URL)
+  if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
+    console.log('✅ Returning B2 URL directly:', imagePath);
+    return imagePath;
+  }
+  
+  // Case 2: Local path starting with /uploads (legacy local files)
+  // These should be served by your Render backend's static route
+  if (imagePath.startsWith('/uploads')) {
+    const url = `https://orphan-care-backend.onrender.com${imagePath}`;
+    console.log('📁 Returning local file from Render:', url);
+    return url;
+  }
+  
+  // Case 3: Any other format - return as is (shouldn't happen)
+  console.log('⚠️ Unknown image path format:', imagePath);
+  return imagePath;
+};
 
   // Fetch all users
   useEffect(() => {
@@ -486,15 +498,17 @@ export default function AdminUsersPage() {
                         alt={user.name}
                         className="w-full h-full object-cover"
                         onError={(e) => {
-                          // Hide broken images and show initials instead
-                          e.currentTarget.style.display = 'none';
-                          const parent = e.currentTarget.parentElement;
-                          if (parent) {
-                            parent.innerHTML = `
-                              <div class="w-24 h-24 ${getAvatarColor(user.id)} text-white rounded-full flex items-center justify-center text-2xl font-bold shadow-lg">
-                                ${getUserInitials(user.name)}
-                              </div>
-                            `;
+                        console.error('❌ Image failed to load:', e);
+                        // Fallback to initials
+                        e.currentTarget.style.display = 'none';
+                        const parent = e.currentTarget.parentElement;
+                        if (parent) {
+                          parent.innerHTML = `
+                            <div class="w-24 h-24 ${getAvatarColor(user.id)} text-white rounded-full 
+                            flex items-center justify-center text-2xl font-bold shadow-lg">
+                              ${getUserInitials(user.name)}
+                            </div>
+                          `;
                           }
                         }}
                       />
